@@ -1,0 +1,15 @@
+<form method="get">
+    <div class="form-row align-items-left">
+        <div class="col-auto">
+            <label for="min">MinHeight</label>
+            <input type="number" class="form-control" name="min" id="min" placeholder="Minimum height" value="{{ .Min }}">
+        </div>
+        <div class="col-auto">
+            <label for="max">MaxHeight</label>
+            <input type="number" class="form-control" name="max" id="max" placeholder="Maximum height" value="{{ .Max }}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mt-4">Submit</button>
+        </div>
+    </div>
+</form>

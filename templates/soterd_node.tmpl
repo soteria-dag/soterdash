@@ -1,0 +1,27 @@
+<div class="card-group">
+    <div class="card">
+        <div class="card-header">node {{ .Address }}</div>
+        <div class="card-body">
+            <ul class="list-unstyled">
+                <li>Version: {{if .Version}}{{ .Version }}{{else}}unknown{{end}}</li>
+                <li>Address: {{ .Address }}</li>
+                <li>{{if .Online }}<span class="badge badge-pill badge-success">Online</span>{{else}}<span class="badge badge-pill badge-danger">Offline</span>{{end}}</li>
+                <li>LastChecked: {{ .LastChecked }}</li>
+                <li>Known addresses: {{ len .Connections }}</li>
+            </ul>
+            {{if (gt (len .Connections) 0) }}
+            <p>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#addrCollapse" aria-expanded="false" aria-controls="addrCollapse">Show known addresses</button>
+            </p>
+
+            <div class="collapse multi-collapse" id="addrCollapse">
+                <ul class="list-unstyled">
+                {{- range $i, $value := .Connections }}
+                    <li><a href="/node/{{ $value.Address }}">{{ $value.Address }}</a></li>
+                {{- end}}
+                </ul>
+            </div>
+            {{end}}
+        </div>
+    </div>
+</div>

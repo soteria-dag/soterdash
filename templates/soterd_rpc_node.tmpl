@@ -1,0 +1,96 @@
+<div class="card-group">
+    <div class="card">
+        <div class="card-header">node {{ .Id }}</div>
+        <div class="card-body">
+            <ul class="list-unstyled">
+                <li>Version: {{if .Version}}{{ .Version }}{{else}}unknown{{end}}</li>
+            </ul>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Recent blocks</h5>
+                    <figure>
+                        {{ .RecentDagSvg }}
+                    </figure>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Network</h5>
+                    <ul class="list-unstyled">
+                        <li>InboundPeers: {{ .InboundPeerCount }}</li>
+                        <li>OutboundPeers: {{ .OutboundPeerCount }}</li>
+                    </ul>
+                    <p>
+                        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#netInCollapse" aria-expanded="false" aria-controls="netInCollapse">Inbound peers</button>
+                        <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#netOutCollapse" aria-expanded="false" aria-controls="netOutCollapse">Outbound peers</button>
+                        <button class="btn btn-warning" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="netInCollapse netOutCollapse">All peers</button>
+                    </p>
+
+                    <div class="collapse multi-collapse" id="netInCollapse">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Inbound Peers</h5>
+                                <div class="list-group">
+                                    {{- range $key, $value := .InboundPeers }}
+                                    <div class="list-group-item">
+                                        <ul class="list-unstyled">
+                                            <li>Addr: {{ $value.Addr }}</li>
+                                            <li>Version: {{ $value.Version }}</li>
+                                        </ul>
+                                    </div>
+                                    {{- end}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collapse multi-collapse" id="netOutCollapse">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Outbound Peers</h5>
+                                <div class="list-group">
+                                    {{- range $key, $value := .OutboundPeers }}
+                                        <div class="list-group-item">
+                                            <ul class="list-unstyled">
+                                                <li>Addr: {{ $value.Addr }}</li>
+                                                <li>Version: {{ $value.Version }}</li>
+                                            </ul>
+                                        </div>
+                                    {{- end}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Block</h5>
+                    <ul class="list-unstyled">
+                        <li>BlockCount: {{ .BlkCount }}</li>
+                    </ul>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Tips</h5>
+                            <ul class="list-unstyled">
+                                <li>MinHeight: {{ .MinHeight }}</li>
+                                <li>MaxHeight: {{ .MaxHeight }}</li>
+                            </ul>
+
+                            <ul class="list-unstyled">
+                            {{- range .Tips -}}
+                                <li><a href="/block/{{ . }}">{{ . }}</a></li>
+                            {{- end}}
+                            </ul>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

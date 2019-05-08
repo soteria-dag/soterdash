@@ -1,0 +1,55 @@
+<div class="card-group">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">block {{ .ShortHash }}</h5>
+            <ul class="list-unstyled">
+                <li>Hash: {{ .Header.BlockHash }}</li>
+                <li>Height: {{ .Height }}</li>
+                <li>Confirmations: {{ .Confirmations }}</li>
+                <li>Difficulty: {{ .Difficulty }}</li>
+                <li>MerkleRoot: {{ .MerkleRoot }}</li>
+            </ul>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Header</h5>
+                    <ul class="list-unstyled">
+                        <li>Version: {{ .Header.Version }}</li>
+                        <li>Timestamp: {{ .Header.Timestamp }}</li>
+                        <li>Bits: {{ .Header.Bits }}</li>
+                        <li>Nonce: {{ .Header.Nonce }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Parents</h5>
+                    <ul class="list-unstyled">
+                        {{- range .Parents.Parents }}
+                            <li><a href="/block/{{ .Hash }}">{{ .Hash }}</a></li>
+                        {{- end}}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Transactions</h5>
+                    <div class="list-group">
+                    {{- range .Transactions }}
+                        <div class="list-group-item">
+                            <ul class="list-unstyled">
+                                <li>Hash: {{ .TxHash }}</li>
+                                <li>Version: {{ .Version }}</li>
+                                <li>LockTime: {{ .LockTime }}</li>
+                                <li>HasWitness {{ .HasWitness }}</li>
+                            </ul>
+                        </div>
+                    {{- end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
