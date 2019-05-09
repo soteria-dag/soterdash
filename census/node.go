@@ -42,7 +42,7 @@ type Node struct {
 // allFresh returns true if none of the nodes' LastChecked times were older than the given duration
 func allFresh(nodes []*Node, d time.Duration) bool {
 	for _, n := range nodes {
-		if n.isStale(d) {
+		if n.IsStale(d) {
 			return false
 		}
 	}
@@ -59,8 +59,8 @@ func (n *Node) isBusy() bool {
 	return true
 }
 
-// isStale returns true if the node's LastChecked time is older than our Enumeration interval
-func (n *Node) isStale(d time.Duration) bool {
+// IsStale returns true if the node's LastChecked time is older from now than the given duration
+func (n *Node) IsStale(d time.Duration) bool {
 	n.updateLock.RLock()
 	defer n.updateLock.RUnlock()
 	return n.LastChecked.Add(d).Before(time.Now())

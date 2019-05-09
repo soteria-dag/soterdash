@@ -39,7 +39,7 @@ type Enumerator struct {
 	nodesLock sync.RWMutex
 
 	// The interval that we'll poll each node at
-	interval time.Duration
+	Interval time.Duration
 
 	// How many workers we should use for enumeration
 	maxWorkers int
@@ -111,7 +111,7 @@ func (e *Enumerator) pickNode() (*Node, bool) {
 	defer e.nodesLock.RUnlock()
 
 	for _, n := range e.nodes {
-		if !n.isStale(e.interval) {
+		if !n.IsStale(e.Interval) {
 			// Don't choose a node whose last poll results are still fresh
 			continue
 		}
@@ -129,13 +129,13 @@ func (e *Enumerator) pickNode() (*Node, bool) {
 // Use Start() to start taking census from soterd nodes.
 func New(seeds []*Node, interval time.Duration, workers int, net *chaincfg.Params) *Enumerator {
 	e := Enumerator{
-		seeds:      seeds,
-		nodes:		make(map[string]*Node),
-		interval:   interval,
-		maxWorkers: workers,
-		soterdNet: net,
+		seeds:               seeds,
+		nodes:               make(map[string]*Node),
+		Interval:            interval,
+		maxWorkers:          workers,
+		soterdNet:           net,
 		workerNotifications: make(chan string),
-		quit:       make(chan struct{}),
+		quit:                make(chan struct{}),
 	}
 
 	return &e

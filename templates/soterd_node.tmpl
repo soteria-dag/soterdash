@@ -5,7 +5,7 @@
             <ul class="list-unstyled">
                 <li>Version: {{if .Version}}{{ .Version }}{{else}}unknown{{end}}</li>
                 <li>Address: {{ .Address }}</li>
-                <li>{{if .Online }}<span class="badge badge-pill badge-success">Online</span>{{else}}<span class="badge badge-pill badge-danger">Offline</span>{{end}}</li>
+                <li>Status: {{if .Stale }}<span class="badge badge-pill badge-secondary">Unknown</span>{{else if .Online }}<span class="badge badge-pill badge-success">Online</span>{{else}}<span class="badge badge-pill badge-danger">Offline</span>{{end}}</li>
                 <li>LastChecked: {{ .LastChecked }}</li>
                 <li>Known addresses: {{ len .Connections }}</li>
             </ul>

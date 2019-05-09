@@ -24,6 +24,14 @@ const (
 var (
 	// Read templates from templates dir
 	templates = template.Must(template.ParseGlob("templates/*.tmpl"))
+
+	// The format used for graphviz color codes
+	hexColor = "#%x%x%x"
+
+	// Color bytes are R, G, B values
+	green = color(0, 217, 101)
+	orange = color(255, 191, 0)
+	gray = color(185, 195, 198)
 )
 
 type dagRange struct {
@@ -31,15 +39,19 @@ type dagRange struct {
 	Max int32
 }
 
-// We'll provide renderDagsDot with a function for picking colors of blocks.
-//
-// The colorPicker should return a string in the graphviz format:
+// color returns a string for the r, g, b values in graphviz format:
+// #rrggbb, where rr is 2 hex characters for red, gg is 2 hex characters for green, bb is 2 hex characters for blue.
+func color(r, g, b int) string {
+	return fmt.Sprintf(hexColor, []byte{uint8(r)}, []byte{uint8(g)}, []byte{uint8(b)})
+}
+
+// colorPicker picks a color based on the input value and returns a string in the graphviz format:
 // #rrggbb, where rr is 2 hex characters for red, gg is 2 hex characters for green, bb is 2 hex characters for blue.
 func colorPicker (v int) string {
 	color := chart.GetAlternateColor(v)
 	// Slice of bytes is used here instead of int value of color, so that Sprintf
 	// uses 2 characters per byte instead of 1, which is what the graphviz format wants.
-	return fmt.Sprintf("#%x%x%x", []byte{color.R}, []byte{color.G}, []byte{color.B})
+	return fmt.Sprintf(hexColor, []byte{color.R}, []byte{color.G}, []byte{color.B})
 }
 
 // setContentType sets the Content-Type HTTP header of a response
@@ -374,10 +386,6 @@ func RenderDagsDot(nodes []*rpcclient.Client, minHeight int32, maxHeight int32) 
 func RenderNodeGraphDot() ([]byte, error) {
 	var dot bytes.Buffer
 
-	// Color bytes are R, G, B values
-	green := fmt.Sprintf("#%x%x%x", []byte{0}, []byte{217}, []byte{101})
-	orange := fmt.Sprintf("#%x%x%x", []byte{217}, []byte{101}, []byte{0})
-
 	nodes := e.Nodes()
 	// graphIndex tracks node address -> graph node number, which is used to connect nodes together.
 	graphIndex := make(map[string]int)
@@ -395,7 +403,11 @@ func RenderNodeGraphDot() ([]byte, error) {
 		graphIndex[sn.Address] = n
 
 		var color string
-		if sn.Online {
+		if sn.IsStale(e.Interval * 3) {
+			// If we don't have new stats from the node within 3 polling intervals,
+			// we can indicate that the node's connectivity info is stale by coloring it gray.
+			color = gray
+		} else if sn.Online {
 			color = green
 		} else {
 			color = orange

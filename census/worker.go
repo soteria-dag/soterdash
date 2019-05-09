@@ -38,18 +38,19 @@ type Worker struct {
 
 // checkNode attempts to check a node and update our information for it
 func (w *Worker) checkNode(n *Node) error {
-	n.updateLock.Lock()
-	defer n.updateLock.Unlock()
 	defer n.free()
 
 	c := w.soterd.Client()
 
 	info, err := c.GetInfo()
+	n.updateLock.Lock()
 	if err != nil {
 		n.Online = false
+		n.updateLock.Unlock()
 		return err
 	}
 	n.Version = fmt.Sprintf("%d", info.Version)
+	n.updateLock.Unlock()
 
 	connected, err := w.soterd.IsConnectedTo(n.Address)
 	if err != nil {
@@ -65,7 +66,9 @@ func (w *Worker) checkNode(n *Node) error {
 
 	_, peers, err := w.soterd.Addrs()
 	if err != nil {
+		n.updateLock.Lock()
 		n.Online = false
+		n.updateLock.Unlock()
 		return err
 	}
 
@@ -78,9 +81,11 @@ func (w *Worker) checkNode(n *Node) error {
 		w.e.AddToCensus(&pn)
 	}
 
+	n.updateLock.Lock()
 	n.connections = conns
 	n.Online = true
 	n.LastChecked = time.Now()
+	n.updateLock.Unlock()
 
 	// Add the node to the survey for future polls, if it hasn't already
 	w.e.AddToCensus(n)
@@ -90,7 +95,7 @@ func (w *Worker) checkNode(n *Node) error {
 
 // checkSeeds attempts to check all the seeds
 func (w *Worker) checkSeeds() {
-	for !allFresh(w.e.seeds, w.e.interval) {
+	for !allFresh(w.e.seeds, w.e.Interval) {
 		for _, n := range w.e.seeds {
 			if n.reserve() {
 				log.Printf("worker %s\tchecking seed %s", w, n)

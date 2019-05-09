@@ -41,6 +41,7 @@ type soterdNode struct {
 	Online bool
 	Connections []*census.Node
 	LastChecked time.Time
+	Stale bool
 }
 
 // Represent node data that we're interested in rendering
@@ -205,6 +206,7 @@ func nodeInfo(address string) (soterdNode, error) {
 		Online: cNode.Online,
 		Connections: cNode.Connections(),
 		LastChecked: cNode.LastChecked,
+		Stale: cNode.IsStale(e.Interval * 3),
 	}
 
 	return n, nil
