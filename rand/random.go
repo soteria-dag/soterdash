@@ -10,6 +10,10 @@ import (
 // RandInt returns a random number between 0 and max value.
 // The zero is inclusive, and the max value is exclusive; randInt(3) returns values from 0 to 2.
 func RandInt(max int) (int, error) {
+	if max == 0 {
+		return 0, nil
+	}
+
 	val, err := rand.Int(rand.Reader, big.NewInt(int64(max)))
 	if err != nil {
 		return -1, err
