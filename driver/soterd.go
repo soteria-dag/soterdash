@@ -21,7 +21,17 @@ type Soterd struct {
 
 // NewSoterd returns a new soterd process
 func NewSoterd(net *chaincfg.Params) (*Soterd, error) {
-	h, err := rpctest.New(net, nil, nil, false)
+	//port, err := rand.RandLoopPort()
+	//if err != nil {
+	//	return nil, err
+	//}
+
+	extra := []string{
+		//"--debuglevel=debug",
+		//"--profile=" + port,
+	}
+
+	h, err := rpctest.New(net, nil, extra, true)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +73,7 @@ func (s *Soterd) Addrs() ([]string, []string, error) {
 	if err != nil {
 		return me, addrs, err
 	}
-	addrs = cache.Addresses
+	addrs = cache.Outbound
 
 	return me, addrs, nil
 }
