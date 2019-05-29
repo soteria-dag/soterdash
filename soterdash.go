@@ -69,7 +69,7 @@ func soterdP2PAddrs(c *rpcclient.Client) ([]string, []string, error) {
 	if err != nil {
 		return me, addrs, err
 	}
-	addrs = cache.Addresses
+	addrs = cache.Outbound
 
 	return me, addrs, nil
 }
