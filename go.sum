@@ -42,8 +42,8 @@ github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/satori/go.uuid v1.2.0/go.mod h1:dA0hQrYB0VpLJoorglMZABFdXlWrHn1NEOzdhQKdks0=
-github.com/soteria-dag/soterd v0.0.0-20191010173247-c452e5c157c5 h1:RP6L2JDmYu2NF7D1/lg3PTZzYJvdu9pQnjjBNm/1gBY=
-github.com/soteria-dag/soterd v0.0.0-20191010173247-c452e5c157c5/go.mod h1:gV4t3vYZhMJvsQrj6LyCKXZZdkGmKOMMQEQxrktnVFM=
+github.com/soteria-dag/soterd v0.0.0-20191010193644-15a9e141a78b h1:rh7BYZ9OlbO2ki9aS9EjkcMUPipiHgj/NQDm4gKBmzE=
+github.com/soteria-dag/soterd v0.0.0-20191010193644-15a9e141a78b/go.mod h1:gV4t3vYZhMJvsQrj6LyCKXZZdkGmKOMMQEQxrktnVFM=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0Q=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
