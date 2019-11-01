@@ -14,7 +14,7 @@ require (
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/hpcloud/tail v1.0.0 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
-	github.com/soteria-dag/soterd v0.0.0-20191010193644-15a9e141a78b
+	github.com/soteria-dag/soterd v0.0.0-20191101002720-80c48f0843ed
 	github.com/wcharczuk/go-chart v2.0.1+incompatible
 	golang.org/x/image v0.0.0-20190321063152-3fc05d484e9f // indirect
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
